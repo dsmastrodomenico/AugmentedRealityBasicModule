@@ -13,7 +13,8 @@ class ObjectTrackerSystem():
 
         # Factor de submuestreo para el cuadro de entrada
         self.scaling_factor = 1 
-        self.frame = cv.resize(self.frame, None, fx=self.scaling_factor, fy=self.scaling_factor, interpolation=cv.INTER_AREA) 
+        self.frame = cv.resize(self.frame, None, 
+            fx=self.scaling_factor, fy=self.scaling_factor, interpolation=cv.INTER_AREA) 
 
         cv.namedWindow('Tracking de Objetos') 
         cv.setMouseCallback('Tracking de Objetos', self.mouse_event) 
@@ -54,7 +55,8 @@ class ObjectTrackerSystem():
             # Captura el cuadro desde la camara
             ret, self.frame = self.cap.read() 
             # Cambiar el tamano del marco de entrada
-            self.frame = cv.resize(self.frame, None, fx=self.scaling_factor, fy=self.scaling_factor, interpolation=cv.INTER_AREA) 
+            self.frame = cv.resize(self.frame, None,
+                fx=self.scaling_factor, fy=self.scaling_factor, interpolation=cv.INTER_AREA) 
 
             vis = self.frame.copy() 
 
@@ -93,7 +95,7 @@ class ObjectTrackerSystem():
                 # Aplicar CAMShift en 'prob' 
                 track_box, self.track_window = cv.CamShift(prob, self.track_window, term_crit) 
 
-                # Dibuja una elipse alrededor del objeto. 
+                # Dibuja una elipse alrededor del objeto.
                 cv.ellipse(vis, track_box, (0, 255, 0), 2) 
 
             cv.imshow('Tracking de Objetos', vis) 

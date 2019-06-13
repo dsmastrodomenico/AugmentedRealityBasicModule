@@ -17,7 +17,8 @@ class BodyTrackerSystem():
         self.num_frames_jump = 2 
 
         # 'winSize' se refiere al tamano de cada parche. Estos parches son los bloques mas pequenos en los que operamos y rastreamos los puntos de caracteristicas.
-        self.tracking_params = dict(winSize = (11, 11), maxLevel = 2, criteria = (cv.TERM_CRITERIA_EPS | cv.TERM_CRITERIA_COUNT, 10, 0.03)) 
+        self.tracking_params = dict(winSize = (11, 11), maxLevel = 2, 
+            criteria = (cv.TERM_CRITERIA_EPS | cv.TERM_CRITERIA_COUNT, 10, 0.03)) 
 
     def compute_feature_points(self, tracking_paths, prev_img, current_img):
         feature_points = [tp[-1] for tp in tracking_paths]
@@ -98,7 +99,7 @@ class BodyTrackerSystem():
 
                 tracking_paths = new_tracking_paths 
 
-                # dibujar lineas verdes en la parte superior de la imagen de salida 
+                # dibujar lineas en la parte superior de la imagen de salida 
                 point_paths = [np.int32(tp) for tp in tracking_paths]
                 cv.polylines(output_img, point_paths, False, (0, 150, 0)) 
 
