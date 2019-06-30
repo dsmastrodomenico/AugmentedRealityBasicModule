@@ -11,10 +11,10 @@ class BodyTrackerSystem():
         self.scaling_factor = 1 
 
         # Numero de cuadros para mantener en el bufer cuando realiza el seguimiento. Si aumenta este numero, los puntos de caracteristica tendran mas "inercia"
-        self.num_frames_to_track = 5 
+        self.num_frames_to_track = 50 
 
         # Saltar cada 'n' cuadros. Esto es solo para aumentar la velocidad.
-        self.num_frames_jump = 2 
+        self.num_frames_jump = 20 
 
         # 'winSize' se refiere al tamano de cada parche. Estos parches son los bloques mas pequenos en los que operamos y rastreamos los puntos de caracteristicas.
         self.tracking_params = dict(winSize = (11, 11), maxLevel = 2, 
@@ -52,7 +52,7 @@ class BodyTrackerSystem():
         mask = self.calculate_region_of_interest(frame, tracking_paths)
 
         # Extrae buenas caracteristicas para seguir. 
-        feature_points = cv.goodFeaturesToTrack(frame, mask = mask, maxCorners = 500, \
+        feature_points = cv.goodFeaturesToTrack(frame, mask = mask, maxCorners = 500, 
             qualityLevel = 0.3, minDistance = 7, blockSize = 7) 
 
         if feature_points is not None: 
