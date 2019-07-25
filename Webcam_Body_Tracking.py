@@ -2,6 +2,7 @@ import sys
 import cv2 as cv 
 import numpy as np 
 
+
 class BodyTrackerSystem(): 
     def __init__(self):
         # Captura el marco de entrada 
@@ -19,6 +20,7 @@ class BodyTrackerSystem():
         # 'winSize' se refiere al tamano de cada parche. Estos parches son los bloques mas pequenos en los que operamos y rastreamos los puntos de caracteristicas.
         self.tracking_params = dict(winSize = (11, 11), maxLevel = 2, 
             criteria = (cv.TERM_CRITERIA_EPS | cv.TERM_CRITERIA_COUNT, 10, 0.03)) 
+
 
     def compute_feature_points(self, tracking_paths, prev_img, current_img):
         feature_points = [tp[-1] for tp in tracking_paths]
@@ -40,6 +42,7 @@ class BodyTrackerSystem():
 
         # Extraer area de interes basada en las rutas de seguimiento (tracking_paths)
 
+
     # En caso de que no haya ninguno, se utiliza todo el cuadro.
     def calculate_region_of_interest(self, frame, tracking_paths):
         mask = np.zeros_like(frame) 
@@ -58,6 +61,7 @@ class BodyTrackerSystem():
         if feature_points is not None: 
             for x, y in np.float32(feature_points).reshape(-1, 2): 
                 tracking_paths.append([(x, y)])
+
 
     def start_tracking(self): 
         tracking_paths = [] 
@@ -117,6 +121,7 @@ class BodyTrackerSystem():
             if c == 27: 
                 break
         cv.destroyAllWindows()
+
 
 if __name__ == '__main__': 
     BodyTrackerSystem().start_tracking() 
