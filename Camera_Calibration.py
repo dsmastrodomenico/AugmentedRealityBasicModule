@@ -1,15 +1,16 @@
 import json
+import sys
 import numpy as np 
 import cv2 as cv
 from datetime import datetime as dt
+from controller import control_camera as cont
 
 
 class CameraCalibration():
-    def __init__(self):
-        self.cap = cv.VideoCapture(0)
+    cap, scaling_factor, num_frames_to_track, num_frames_jump, tracking_params = cont().camera()
 
 
-    def start_process(self):
+    def start_calibration_process(self):
         patw, path = 7, 6
 
         objp = np.zeros((patw * path, 3))
@@ -70,7 +71,3 @@ class CameraCalibration():
             print('Images are not enough')
         self.cap.release()
         cv.destroyAllWindows()
-
-
-if __name__ == '__main__':
-    CameraCalibration().start_process()

@@ -1,26 +1,13 @@
+import json
 import sys
 import cv2 as cv 
 import numpy as np 
+from controller import control_camera 
 
 
 class BodyTrackerSystem(): 
-    def __init__(self):
-        # Captura el marco de entrada 
-        self.cap = cv.VideoCapture(0) 
 
-        # Factor de submuestreo para la imagen. 
-        self.scaling_factor = 1 
-
-        # Numero de cuadros para mantener en el bufer cuando realiza el seguimiento. Si aumenta este numero, los puntos de caracteristica tendran mas "inercia"
-        self.num_frames_to_track = 50 
-
-        # Saltar cada 'n' cuadros. Esto es solo para aumentar la velocidad.
-        self.num_frames_jump = 20 
-
-        # 'winSize' se refiere al tamano de cada parche. Estos parches son los bloques mas pequenos en los que operamos y rastreamos los puntos de caracteristicas.
-        self.tracking_params = dict(winSize = (11, 11), maxLevel = 2, 
-            criteria = (cv.TERM_CRITERIA_EPS | cv.TERM_CRITERIA_COUNT, 10, 0.03)) 
-
+    cap, scaling_factor, num_frames_to_track, num_frames_jump, tracking_params = control_camera().camera()
 
     def compute_feature_points(self, tracking_paths, prev_img, current_img):
         feature_points = [tp[-1] for tp in tracking_paths]
@@ -121,8 +108,3 @@ class BodyTrackerSystem():
             if c == 27: 
                 break
         cv.destroyAllWindows()
-
-
-if __name__ == '__main__': 
-    BodyTrackerSystem().start_tracking() 
-    
