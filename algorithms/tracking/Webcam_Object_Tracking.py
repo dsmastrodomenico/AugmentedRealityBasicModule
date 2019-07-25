@@ -1,13 +1,15 @@
-import sys 
-import cv2 as cv
+import json
+import sys
+import cv2 as cv 
 import numpy as np 
+from algorithms.controller import control_camera 
 
-class ObjectTrackerSystem(): 
-    def __init__(self): 
-        # Inicializar el objeto de captura de video.
-        # 0 -> indica que el cuadro debe ser capturado de la camara
-        self.cap = cv.VideoCapture(0) 
 
+class ObjectTrackerSystem():
+
+    cap, scaling_factor, num_frames_to_track, num_frames_jump, tracking_params = control_camera().camera()
+
+    def object_select(self): 
         # Captura el cuadro desde la camara 
         ret, self.frame = self.cap.read() 
 
@@ -22,6 +24,7 @@ class ObjectTrackerSystem():
         self.selection = None 
         self.drag_start = None 
         self.tracking_state = 0 
+
 
     # Metodo para rastrear eventos del mouse
     def mouse_event(self, event, x, y, flags, param): 
@@ -47,6 +50,7 @@ class ObjectTrackerSystem():
                 self.drag_start = None 
                 if self.selection is not None: 
                     self.tracking_state = 1 
+
 
     # Definicion del metodo para iniciar el seguimiento del objeto.
     def start_tracking(self): 
@@ -100,11 +104,8 @@ class ObjectTrackerSystem():
 
             cv.imshow('Tracking de Objetos', vis) 
 
-            c = cv.waitKey(delay=5) 
+            c = cv.waitKey() 
             if c == 27: 
                 break 
 
         cv.destroyAllWindows() 
-
-if __name__ == '__main__': 
-    ObjectTrackerSystem().start_tracking()

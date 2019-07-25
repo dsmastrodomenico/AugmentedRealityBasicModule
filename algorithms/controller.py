@@ -1,11 +1,11 @@
-import json
 import sys
 import cv2 as cv 
-import numpy as np 
+
 
 class control_camera(): 
     def camera(self):
-        # Captura el marco de entrada 
+        # Inicializar el objeto de captura de video.
+        # 0 -> indica que el cuadro debe ser capturado de la camara
         cap = cv.VideoCapture(0) 
 
         # Factor de submuestreo para la imagen. 
