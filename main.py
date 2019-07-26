@@ -21,3 +21,7 @@ if __name__ == "__main__":
             BodyTrackerSystem().start_tracking()
         elif command == 'E':
             break
+<<<<<<< HEAD
+=======
+
+>>>>>>> cddf4d258e5ecc38db0f843be9baffcbb4957f90

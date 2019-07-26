@@ -70,4 +70,9 @@ class CameraCalibration():
         else:
             print('Images are not enough')
         self.cap.release()
+<<<<<<< HEAD:algorithms/calibration/Camera_Calibration.py
         cv.destroyAllWindows()
+=======
+        cv.destroyAllWindows()
+
+>>>>>>> cddf4d258e5ecc38db0f843be9baffcbb4957f90:Camera_Calibration.py
