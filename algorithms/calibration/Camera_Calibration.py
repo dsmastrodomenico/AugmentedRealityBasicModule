@@ -3,11 +3,11 @@ import sys
 import numpy as np 
 import cv2 as cv
 from datetime import datetime as dt
-from controller import control_camera as cont
+from algorithms.controller import control_camera
 
 
 class CameraCalibration():
-    cap, scaling_factor, num_frames_to_track, num_frames_jump, tracking_params = cont().camera()
+    cap, scaling_factor, num_frames_to_track, num_frames_jump, tracking_params = control_camera().camera()
 
 
     def start_calibration_process(self):

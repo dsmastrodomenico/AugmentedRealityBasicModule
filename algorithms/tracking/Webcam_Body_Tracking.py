@@ -2,7 +2,7 @@ import json
 import sys
 import cv2 as cv 
 import numpy as np 
-from controller import control_camera 
+from algorithms.controller import control_camera 
 
 
 class BodyTrackerSystem(): 
