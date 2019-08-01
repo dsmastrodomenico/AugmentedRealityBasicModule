@@ -1,12 +1,11 @@
 import sys
-from algorithms.calibration.Camera_Calibration import CameraCalibration
-from algorithms.tracking.Webcam_Body_Tracking import BodyTrackerSystem 
+
 
 if __name__ == "__main__":
     print(
         'What do you like to do?\n' +
         '   [C]alibrate.\n' +
-        '   [R]e.\n' + 
+        '   [D]etection.\n' + 
         '   [T]racking.\n' +
         '   [E]xit.')
 
@@ -14,14 +13,14 @@ if __name__ == "__main__":
         command = None
         command = input('\nOption:\t').upper()
         if command == 'C':
+            from algorithms.calibration.Camera_Calibration import CameraCalibration
             CameraCalibration().start_calibration_process()
-        elif command == 'R':
-            pass
+        elif command == 'D':
+            from algorithms.recognition.Shape_Detection import ShapeDetection 
+            ShapeDetection().read_process()
         elif command == 'T':
+            from algorithms.tracking.Webcam_Body_Tracking import BodyTrackerSystem
             BodyTrackerSystem().start_tracking()
         elif command == 'E':
             break
-<<<<<<< HEAD
-=======
 
->>>>>>> cddf4d258e5ecc38db0f843be9baffcbb4957f90
