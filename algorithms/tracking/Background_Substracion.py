@@ -1,49 +1,49 @@
+import json
 import sys
-import cv2 as cv
+import cv2 as cv 
 import numpy as np 
+from algorithms.controller import control_camera 
 
-# Captura el cuadro de entrada
-def get_frame(cap, scaling_factor=0.5): 
-    ret, frame = cap.read() 
 
-    # Cambiar el tamaño del marco
-    frame = cv.resize(frame, None, fx=scaling_factor, 
-            fy=scaling_factor, interpolation=cv.INTER_AREA) 
+class BackgroundSubstraction():
+    cap, scaling_factor, _, _, _ = control_camera().camera()
 
-    return frame 
+    # Captura el cuadro de entrada
+    def get_frame(self, cap, scaling_factor=0.5): 
+        ret, frame = self.cap.read() 
 
-if __name__=='__main__': 
-    # Inicializar el objeto de captura de video
-    cap = cv.VideoCapture(0) 
+        # Cambiar el tamaño del marco
+        frame = cv.resize(frame, None, fx=scaling_factor, 
+                fy=scaling_factor, interpolation=cv.INTER_AREA) 
 
-    # Crear el objeto restador de fondo
-    bgSubtractor = cv.createBackgroundSubtractorMOG2()
+        return frame 
 
-    # This factor controls the learning rate of the algorithm. 
-    # The learning rate refers to the rate at which your model 
-    # will learn about the background. Higher value for 
-    # 'history' indicates a slower learning rate. You 
-    # can play with this parameter to see how it affects 
-    # the output. 
-    history = 100 
+    def substraction(self):
+        # Crear el objeto restador de fondo
+        bgSubtractor = cv.createBackgroundSubtractorMOG2()
 
-    # Iterate until the user presses the ESC key 
-    while True: 
-        frame = get_frame(cap, 0.5) 
+        # Este factor controla la tasa de aprendizaje del algoritmo. La tasa de aprendizaje se refiere a la tasa a la que su modelo aprenderá 
+        # sobre el fondo. Un valor más alto para 'historia' indica una tasa de aprendizaje más lenta. Puedes jugar con este parámetro para 
+        # ver cómo afecta la salida.
+        history = 100 
 
-        # Apply the background subtraction model to the input frame 
-        mask = bgSubtractor.apply(frame, learningRate=1.0/history)
+        # Iterar hasta que el usuario presione la tecla ESC
+        while True: 
+            frame = self.get_frame(self.cap, 0.5) 
 
-        # Convert from grayscale to 3-channel RGB 
-        mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR) 
+            # Aplicar el modelo de resta de fondo al marco de entrada
+            mask = bgSubtractor.apply(frame, learningRate=1.0/history)
 
-        cv.imshow('Input frame', frame)
-        cv.imshow('Moving Objects MOG', mask & frame)
+            # Convertir de escala de grises a RGB de 3 canales 
+            mask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR) 
 
-        # Check if the user pressed the ESC key 
-        c = cv.waitKey(delay=30) 
-        if c == 27: 
-            break 
+            cv.imshow('Input frame', frame)
+            cv.imshow('Moving Objects MOG', mask & frame)
 
-    cap.release() 
-    cv.destroyAllWindows()
+            # Compruebe si el usuario presionó la tecla ESC 
+            c = cv.waitKey(delay=30) 
+            if c == 27: 
+                break 
+
+        self.cap.release() 
+        cv.destroyAllWindows()

@@ -6,7 +6,6 @@ from algorithms.controller import control_camera
 
 
 class ShapeDetection():
-
     cap, scaling_factor, _, _, _ = control_camera().camera()
 
 
@@ -56,15 +55,24 @@ class ShapeDetection():
                 recording = True
             elif key == ord("s"):
                 if corners is not None:
-                    with open('resources/coords.txt', 'w') as coords_file:
+                    with open('data/coords.json', 'w') as coords_file:
                         corners = np.int0(corners)
                         for corner in corners:
-                            np.savetxt(coords_file, corner, fmt='%-4d')
+                            coords = {
+                                "coords_file": coords_file,
+                                'corner': corner
+                            }
+                            json.dump(coords, coords_file, sort_keys=True, indent=4)
 
                 if points is not None:
                     print(points)
-                    with open('resources/points.txt', 'w') as txtPoints:
+                    with open('data/points.json', 'w') as savePoints:
                         npPoints = np.int0(points)
-                        np.savetxt(txtPoints, npPoints, fmt='%-4d')
+                        nPoints = {
+                            "savePoints": savePoints,
+                            'points': npPoints
+                        }
+                        json.dump(nPoints, savePoints, sort_keys=True, indent=4)
+
         self.cap.release()
         cv.destroyAllWindows()

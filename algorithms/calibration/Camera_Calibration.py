@@ -7,7 +7,7 @@ from algorithms.controller import control_camera
 
 
 class CameraCalibration():
-    cap, scaling_factor, num_frames_to_track, num_frames_jump, tracking_params = control_camera().camera()
+    cap, _, _, _, _ = control_camera().camera()
 
 
     def start_calibration_process(self):
@@ -19,7 +19,7 @@ class CameraCalibration():
         objp_list, imgp_list = [], []
 
         while True:
-            stat, image = self.cap.read()
+            _, image = self.cap.read()
 
             ret, corners = cv.findChessboardCorners(image, (patw, path), None)
             cv.drawChessboardCorners(image, (patw, path), corners, ret)
@@ -59,14 +59,10 @@ class CameraCalibration():
                 'Distortion': distor,
                 "Error": Error
             }
-
-            print('K = ¥n', K)
-            """np.savetxt('K.txt', K)"""
-            print('Distcoeff= ¥n', dist)
-            """np.savetxt('distCoef.txt', dist)"""
-            print('Error = ', Error)
+            
             with open('data/calib.json', 'w') as fp:
                 json.dump(result, fp, sort_keys=True, indent=4)
+
         else:
             print('Images are not enough')
         self.cap.release()
