@@ -7,7 +7,9 @@ from algorithms.controller import control_camera
 
 
 class CameraCalibration():
-    cap, _, _, _, _ = control_camera().camera()
+    # Crear objeto VideoCapture:
+    # Create VideoCapture object:
+    cap, _, _, _, _ = control_camera().InitializeCamera()
 
 
     def start_calibration_process(self):
@@ -23,7 +25,7 @@ class CameraCalibration():
 
             ret, corners = cv.findChessboardCorners(image, (patw, path), None)
             cv.drawChessboardCorners(image, (patw, path), corners, ret)
-            cv.imshow('Find ChessBoard', image)
+            cv.imshow('Frame', image)
 
             key = cv.waitKey(10)
             if key == 0x1b:  # ESC
@@ -66,4 +68,4 @@ class CameraCalibration():
         else:
             print('Images are not enough')
         self.cap.release()
-        cv.destroyAllWindows()
+        # cv.destroyAllWindows()

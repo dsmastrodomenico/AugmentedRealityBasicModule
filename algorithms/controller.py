@@ -3,7 +3,7 @@ import cv2 as cv
 
 
 class control_camera(): 
-    def camera(self):
+    def InitializeCamera(self):
         # Inicializar el objeto de captura de video.
         # 0 -> indica que el cuadro debe ser capturado de la camara
         cap = cv.VideoCapture(0) 
